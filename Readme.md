@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Анастасия  Лукина](https://up.htmlacademy.ru/javascript/25/user/1744989).
-* Наставник: [Раиль Сахавиев] (https://htmlacademy.ru/profile/id1331891).
+* Наставник: [Раиль Сахавиев :) ] (https://htmlacademy.ru/profile/id1331891).
 
 ---
 
