@@ -6,11 +6,5 @@ function getRandom(min, max) {
   }
 }
 
-// function checkLength(str, max) {
-//   return str.length < max;
-// }
-// checkLength(1, 1);
-
 const getRandomArrayElement = (elements) => elements[getRandom(0, elements.length - 1)];
-export {getRandomArrayElement};
-export {getRandom};
+export { getRandomArrayElement, getRandom };
