@@ -1,7 +1,6 @@
 import './util.js';
-import {mostPosts} from './data.js';
-
-//eslint-disable-next-line
-console.log(
-  mostPosts()
-);
+import {createPictures} from './data.js';
+import {renderPictures} from './photo.js';
+const PHOTOS_COUNT = 25;
+const pictures = Array.from({length: PHOTOS_COUNT}, createPictures);
+renderPictures(pictures);

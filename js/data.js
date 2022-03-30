@@ -22,10 +22,10 @@ const DESCRIPTIONS = [
   'Круто, да?',
 ];
 
-function createObject (_, index) {
+function createPictures (_, index) {
   return {
     id: index + 1,
-    url: 'img/{{index + 1}}.jpg',
+    url: `img/logo-background-${index % 3 + 1}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandom(15, 200),
     comments: Array.from({length: getRandom(1, 10)}, createComments),
@@ -41,10 +41,5 @@ function createComments () {
   };
 }
 
-const PHOTOS_COUNT = 25;
-const mostPosts = Array.from({length: PHOTOS_COUNT}, createObject);
-
-//eslint-disable-next-line
-console.log(mostPosts);
-export {mostPosts};
+export {createPictures};
 
