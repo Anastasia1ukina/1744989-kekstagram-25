@@ -7,4 +7,14 @@ function getRandom(min, max) {
 }
 
 const getRandomArrayElement = (elements) => elements[getRandom(0, elements.length - 1)];
+
+const ESC_KEY_CODE = 27;
+
+const isEscapeKey = (evt, action) => {
+  if (evt.keyCode === ESC_KEY_CODE) {
+    action();
+  }
+};
+
 export { getRandomArrayElement, getRandom };
+export { isEscapeKey };
