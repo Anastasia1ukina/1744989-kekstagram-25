@@ -35,7 +35,7 @@ function createPictures (_, index) {
 function createComments () {
   return {
     id: getRandom(200, 300),
-    avatar: 'img/avatar-{{getRandom(1, 6)}}.svg',
+    avatar: `img/avatar-${getRandom(1, 6)}.svg`,
     message: getRandomArrayElement(COMMENTS),
     name: getRandomArrayElement(NAMES),
   };
