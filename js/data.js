@@ -25,7 +25,7 @@ const DESCRIPTIONS = [
 function createPictures (_, index) {
   return {
     id: index + 1,
-    url: `img/logo-background-${index % 3 + 1}.jpg`,
+    url: `photos/${index + 1}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandom(15, 200),
     comments: Array.from({length: getRandom(1, 10)}, createComments),
@@ -42,4 +42,5 @@ function createComments () {
 }
 
 export {createPictures};
+
 
