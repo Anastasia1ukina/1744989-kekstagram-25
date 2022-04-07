@@ -16,5 +16,4 @@ const isEscapeKey = (evt, action) => {
   }
 };
 
-export { getRandomArrayElement, getRandom };
-export { isEscapeKey };
+export { getRandomArrayElement, getRandom, isEscapeKey};
