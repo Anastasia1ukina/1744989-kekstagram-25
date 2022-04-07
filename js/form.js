@@ -30,8 +30,6 @@ descriptionElement.addEventListener('keyup', (evt) => {
 
 const pristine = new Pristine(uploadForm);
 
-// const uploadPreview = document.querySelector('.img-upload__preview');
-
 function validateHashtagSymbols(hashtag) {
   return hashtag.match('^#[a-zа-яёЁ0-9]{1,19}$');
 }

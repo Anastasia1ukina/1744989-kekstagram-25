@@ -3,31 +3,30 @@ const scaleToSmaller = document.querySelector('.scale__control--smaller');
 const scaleToBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 
-const stepValue = 25;
-const minValue = 25;
-const maxValue = 100;
-// Хранимое значение
+const STEP_VALUE = 25;
+const MIN_VALUE = 25;
+const MAX_VALUE = 100;
+
 let scaleValue = scaleControlValue.value;
 
 scaleToSmaller.addEventListener('click', () => {
-  scaleValue = Number(scaleValue) - Number(stepValue);
-  if (scaleValue < minValue) {
-    scaleValue = minValue;
+  scaleValue = parseInt(scaleValue, 10) - Number(STEP_VALUE);
+  if (scaleValue < MIN_VALUE) {
+    scaleValue = MIN_VALUE;
   }
-  scaleControlValue.value = scaleValue;
+  scaleControlValue.value = `${scaleValue}%`;
   applySizeImg();
 });
 
 scaleToBigger.addEventListener('click', () => {
-  scaleValue = Number(scaleValue) + Number(stepValue);
-  if (scaleValue > maxValue) {
-    scaleValue = maxValue;
+  scaleValue = parseInt(scaleValue, 10) + Number(STEP_VALUE);
+  if (scaleValue > MAX_VALUE) {
+    scaleValue = MAX_VALUE;
   }
-  scaleControlValue.value = scaleValue;
+  scaleControlValue.value = `${scaleValue}%`;
   applySizeImg();
 });
 
-// Функция привязки значения для картинки
 function applySizeImg () {
-  imgUploadPreview.style.transform = `scale(${  scaleControlValue.value / 100  })`;
+  imgUploadPreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
 }

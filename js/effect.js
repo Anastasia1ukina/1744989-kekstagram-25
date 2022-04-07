@@ -4,7 +4,6 @@ const valueElement = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 
-let chekedValue;
 let effectName;
 let method = '';
 
@@ -92,33 +91,32 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-sliderElement.noUiSlider.on('update', () => {
-  valueElement.value = sliderElement.noUiSlider.get();
-  controlSlider();
-});
-
-// Выбранный фильтр
-effectsList.addEventListener('change', (evt) => {
-  chekedValue = evt.target.closest('input[type="radio"]').value;
-  sliderSetting();
-});
-
-function controlSlider () {
-  imgUploadPreview.style.filter = `${ effectName }(${ valueElement.value + method})`;
-  return '';
-}
-
-function sliderSetting () {
-// Без эффекта
-  if (chekedValue === 'none') {
+function changeSliderSetting (checkedValue) {
+  if (checkedValue === 'none') {
     imgUploadPreview.style.filter = 'none';
     uploadEffectSlider.classList.add('hidden');
   }
   else {
     uploadEffectSlider.classList.remove('hidden');
-    const effect = effects[chekedValue];
+    const effect = effects[checkedValue];
     effectName = effect.effectProperty;
     method = effect.unit;
     sliderElement.noUiSlider.updateOptions(effect.sliderIntensity);
   }
 }
+
+function initSlider () {
+  uploadEffectSlider.classList.add('hidden');
+
+  sliderElement.noUiSlider.on('update', () => {
+    valueElement.value = sliderElement.noUiSlider.get();
+    imgUploadPreview.style.filter = `${effectName}(${valueElement.value + method})`;
+  });
+
+  effectsList.addEventListener('change', (evt) => {
+    const checkedValue = evt.target.closest('input[type="radio"]').value;
+    changeSliderSetting(checkedValue);
+  });
+}
+
+export { initSlider };

@@ -2,24 +2,23 @@ const picturesContainer = document.querySelector('.pictures');
 const template = document.querySelector('#picture').content.querySelector('.picture');
 const pictureModal = document.querySelector('.big-picture');
 
-const postCommentBlock = document.querySelector('.social__comments');
-const commentCount = document.querySelector('.social__comment-count');
-const commentLoadMore = document.querySelector('.social__comments-loader');
+// const postCommentBlock = document.querySelector('.social__comments');
+// const commentCount = document.querySelector('.social__comment-count');
+// const commentLoadMore = document.querySelector('.social__comments-loader');
 
-const STEP_OPEN_COMMENTS = 5;
+// const STEP_OPEN_COMMENTS = 5;
 
-// Вывод 5 комментариев
-const createCommentElement = function (comment) {
-  const cloneComment = postCommentBlock.querySelector('.social__comment').cloneNode(true);
-  const commentAvatar = cloneComment.querySelector('.social__picture');
-  const commentMessage = cloneComment.querySelector('.social__text');
+// const createCommentElement = function (comment) {
+//   const cloneComment = postCommentBlock.querySelector('.social__comment').cloneNode(true);
+//   const commentAvatar = cloneComment.querySelector('.social__picture');
+//   const commentMessage = cloneComment.querySelector('.social__text');
 
-  commentAvatar.src = comment.avatar;
-  commentAvatar.alt = comment.name;
-  commentMessage.textContent = comment.message;
+//   commentAvatar.src = comment.avatar;
+//   commentAvatar.alt = comment.name;
+//   commentMessage.textContent = comment.message;
 
-  return cloneComment;
-};
+//   return cloneComment;
+// };
 
 pictureModal.querySelector('.big-picture__cancel').addEventListener('click', () => {
   document.body.classList.remove('modal-open');
@@ -32,7 +31,6 @@ document.addEventListener('keyup', (evt) => {
   }
 });
 
-// Большое изображение
 function openPictureModal (picture) {
   document.body.classList.add('modal-open');
   pictureModal.classList.remove('hidden');
