@@ -66,6 +66,7 @@ function renderPictures (pictures) {
   });
 
   picturesContainer.appendChild(fragment);
+  picturesContainer.classList.remove('hidden');
 }
 
 

@@ -28,7 +28,11 @@ descriptionElement.addEventListener('keyup', (evt) => {
   }
 });
 
-const pristine = new Pristine(uploadForm);
+const pristine = new Pristine(uploadForm, {
+  classTo: 'form-group',
+  errorTextParent: 'form-group',
+  errorTextClass: 'setup-wizard-form__error-text',
+});
 
 function validateHashtagSymbols(hashtag) {
   return hashtag.match('^#[a-zа-яёЁ0-9]{1,19}$');
@@ -81,13 +85,20 @@ function initUploadForm() {
   });
   uploadForm.addEventListener('submit', (evt) => {
     const isValid = pristine.validate();
+    evt.preventDefault();
     if (isValid) {
-      // eslint-disable-next-line no-console
-      console.log(isValid);
-    } else {
-      evt.preventDefault();
-      // eslint-disable-next-line no-console
-      console.log(isValid);
+      const formData = new FormData(evt.target);
+
+      fetch(
+        'https://25.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      ).catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
     }
   });
 }
