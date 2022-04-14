@@ -1,18 +1,24 @@
-const uploadInput = document.querySelector('.img-upload__input');
-const uploadModal = document.querySelector('.img-upload__overlay');
-const uploadForm = document.querySelector('.img-upload__form');
-const descriptionElement = uploadForm.querySelector('.text__description');
-const hashtagsElement = uploadForm.querySelector('.text__hashtags');
+import {uploadForm} from './fetch.js';
+import {showErrorMessage, showSuccessMessage} from './messages.js';
 
-uploadModal.querySelector('.img-upload__cancel').addEventListener('click', () => {
+const uploadInputElement = document.querySelector('.img-upload__input');
+const uploadModalElement = document.querySelector('.img-upload__overlay');
+const uploadFormElement = document.querySelector('.img-upload__form');
+const descriptionElement = uploadFormElement.querySelector('.text__description');
+const hashtagsElement = uploadFormElement.querySelector('.text__hashtags');
+// const hashTagsValidText = document.querySelector('.text__error-hashtag');
+// const descriptionValidText = document.querySelector('.text__error-description');
+// const submitButton = document.querySelector('.img-upload__submit');
+
+uploadModalElement.querySelector('.img-upload__cancel').addEventListener('click', () => {
   document.body.classList.remove('modal-open');
-  uploadModal.classList.add('hidden');
+  resetForm();
 });
 
 document.addEventListener('keyup', (evt) => {
   if (evt.key === 'Escape') {
-    uploadInput.value = '';
-    uploadModal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    resetForm();
   }
 });
 
@@ -28,7 +34,11 @@ descriptionElement.addEventListener('keyup', (evt) => {
   }
 });
 
-const pristine = new Pristine(uploadForm);
+const pristine = new Pristine(uploadFormElement, {
+  classTo: 'form-group',
+  errorTextParent: 'form-group',
+  errorTextClass: 'text__error',
+});
 
 function validateHashtagSymbols(hashtag) {
   return hashtag.match('^#[a-zа-яёЁ0-9]{1,19}$');
@@ -72,22 +82,35 @@ function getHashtagsErrorMessage (value) {
   }
 }
 
+function resetForm() {
+  uploadInputElement.value = '';
+  descriptionElement.value = '';
+  hashtagsElement.value = '';
+  uploadModalElement.classList.add('hidden');
+  pristine.reset();
+
+}
+
 function initUploadForm() {
   pristine.addValidator(descriptionElement, (value) => value.length <= 140, 'длина комментария не может составлять больше 140 символов');
   pristine.addValidator(hashtagsElement, validateHashtags, getHashtagsErrorMessage);
 
-  uploadInput.addEventListener('change', () => {
-    uploadModal.classList.remove('hidden');
+  uploadInputElement.addEventListener('change', () => {
+    document.body.classList.add('modal-open');
+    uploadModalElement.classList.remove('hidden');
   });
-  uploadForm.addEventListener('submit', (evt) => {
+  uploadFormElement.addEventListener('submit', (evt) => {
     const isValid = pristine.validate();
+    evt.preventDefault();
     if (isValid) {
-      // eslint-disable-next-line no-console
-      console.log(isValid);
-    } else {
-      evt.preventDefault();
-      // eslint-disable-next-line no-console
-      console.log(isValid);
+      const formData = new FormData(evt.target);
+      uploadForm(formData, () => {
+        resetForm();
+        showSuccessMessage();
+      }, () => {
+        resetForm();
+        showErrorMessage();
+      });
     }
   });
 }
