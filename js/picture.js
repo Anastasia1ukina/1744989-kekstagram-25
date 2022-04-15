@@ -81,5 +81,4 @@ function renderPictures (pictures) {
   picturesContainer.classList.remove('hidden');
 }
 
-
 export { renderPictures };

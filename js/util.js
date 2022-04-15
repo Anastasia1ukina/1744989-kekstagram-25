@@ -8,4 +8,12 @@ function getRandom(min, max) {
 
 const getRandomArrayElement = (elements) => elements[getRandom(0, elements.length - 1)];
 
-export { getRandomArrayElement, getRandom };
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomArrayElement, getRandom, debounce };
