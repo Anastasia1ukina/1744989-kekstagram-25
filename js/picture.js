@@ -66,6 +66,8 @@ function openPictureModal (picture) {
 function renderPictures (pictures) {
   const fragment = document.createDocumentFragment ();
 
+  picturesContainer.querySelectorAll('.picture').forEach((el) => el.remove());
+
   pictures.forEach((picture) => {
     const photoElement = template.cloneNode(true);
     photoElement.querySelector('.picture__img').src = picture.url;
