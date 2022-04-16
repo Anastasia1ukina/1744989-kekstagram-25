@@ -6,9 +6,6 @@ const uploadModalElement = document.querySelector('.img-upload__overlay');
 const uploadFormElement = document.querySelector('.img-upload__form');
 const descriptionElement = uploadFormElement.querySelector('.text__description');
 const hashtagsElement = uploadFormElement.querySelector('.text__hashtags');
-// const hashTagsValidText = document.querySelector('.text__error-hashtag');
-// const descriptionValidText = document.querySelector('.text__error-description');
-// const submitButton = document.querySelector('.img-upload__submit');
 
 uploadModalElement.querySelector('.img-upload__cancel').addEventListener('click', () => {
   document.body.classList.remove('modal-open');
@@ -88,7 +85,6 @@ function resetForm() {
   hashtagsElement.value = '';
   uploadModalElement.classList.add('hidden');
   pristine.reset();
-
 }
 
 function initUploadForm() {
@@ -108,7 +104,6 @@ function initUploadForm() {
         resetForm();
         showSuccessMessage();
       }, () => {
-        resetForm();
         showErrorMessage();
       });
     }
