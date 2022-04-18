@@ -8,13 +8,13 @@ import {fetchPictures} from './fetch.js';
 import {resetFileInput} from './upload-picture.js';
 import {initFilters} from './filters.js';
 
-window.onload = function () {
+window.addEventListener('DOMContentLoaded', () => {
   initUploadForm();
   initSlider();
-  fetchPictures( (pictures) => {
+  fetchPictures((pictures) => {
     renderPictures(pictures);
     initFilters(pictures);
   });
   resetFileInput();
-};
+});
 

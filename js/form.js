@@ -7,6 +7,9 @@ const uploadFormElement = document.querySelector('.img-upload__form');
 const descriptionElement = uploadFormElement.querySelector('.text__description');
 const hashtagsElement = uploadFormElement.querySelector('.text__hashtags');
 
+const MAX_NUMBER_HASHTAGS = 5;
+const MAX_LENGTH_COMMENT = 140;
+
 uploadModalElement.querySelector('.img-upload__cancel').addEventListener('click', () => {
   document.body.classList.remove('modal-open');
   resetForm();
@@ -48,7 +51,7 @@ function hasDuplicates(array) {
 function validateHashtags (value) {
   const hashtags = value.split(' ');
   const filteredHashtags = hashtags.filter((hashtag) => hashtag.trim() !== '');
-  if (filteredHashtags.length > 5) {
+  if (filteredHashtags.length > MAX_NUMBER_HASHTAGS) {
     return false;
   }
   const hashtagValid = filteredHashtags.every(validateHashtagSymbols);
@@ -64,7 +67,7 @@ function validateHashtags (value) {
 function getHashtagsErrorMessage (value) {
   const hashtags = value.split(' ');
   const filteredHashtags = hashtags.filter((hashtag) => hashtag.trim() !== '');
-  if (filteredHashtags.length > 5) {
+  if (filteredHashtags.length > MAX_NUMBER_HASHTAGS) {
     return 'нельзя указать больше пяти хэш-тегов';
   }
   const hashtagValid = filteredHashtags.every(validateHashtagSymbols);
@@ -88,7 +91,7 @@ function resetForm() {
 }
 
 function initUploadForm() {
-  pristine.addValidator(descriptionElement, (value) => value.length <= 140, 'длина комментария не может составлять больше 140 символов');
+  pristine.addValidator(descriptionElement, (value) => value.length <= MAX_LENGTH_COMMENT, 'длина комментария не может составлять больше 140 символов');
   pristine.addValidator(hashtagsElement, validateHashtags, getHashtagsErrorMessage);
 
   uploadInputElement.addEventListener('change', () => {
