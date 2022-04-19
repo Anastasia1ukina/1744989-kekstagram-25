@@ -119,4 +119,8 @@ function initSlider () {
   });
 }
 
-export { initSlider };
+function resetEffect () {
+  document.getElementById('effect-none').click();
+}
+
+export { initSlider, resetEffect };

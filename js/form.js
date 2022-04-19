@@ -1,11 +1,23 @@
 import {uploadForm} from './fetch.js';
 import {showErrorMessage, showSuccessMessage} from './messages.js';
+import { resetScale } from './scale.js';
+import { resetEffect } from './effect.js';
 
 const uploadInputElement = document.querySelector('.img-upload__input');
 const uploadModalElement = document.querySelector('.img-upload__overlay');
 const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadSubmitElement = document.getElementById('upload-submit');
 const descriptionElement = uploadFormElement.querySelector('.text__description');
 const hashtagsElement = uploadFormElement.querySelector('.text__hashtags');
+
+const MAX_NUMBER_HASHTAGS = 5;
+const MAX_LENGTH_COMMENT = 140;
+
+uploadModalElement.addEventListener('click', (evt) => {
+  if (evt.target === uploadModalElement) {
+    resetForm();
+  }
+});
 
 uploadModalElement.querySelector('.img-upload__cancel').addEventListener('click', () => {
   document.body.classList.remove('modal-open');
@@ -48,7 +60,7 @@ function hasDuplicates(array) {
 function validateHashtags (value) {
   const hashtags = value.split(' ');
   const filteredHashtags = hashtags.filter((hashtag) => hashtag.trim() !== '');
-  if (filteredHashtags.length > 5) {
+  if (filteredHashtags.length > MAX_NUMBER_HASHTAGS) {
     return false;
   }
   const hashtagValid = filteredHashtags.every(validateHashtagSymbols);
@@ -64,7 +76,7 @@ function validateHashtags (value) {
 function getHashtagsErrorMessage (value) {
   const hashtags = value.split(' ');
   const filteredHashtags = hashtags.filter((hashtag) => hashtag.trim() !== '');
-  if (filteredHashtags.length > 5) {
+  if (filteredHashtags.length > MAX_NUMBER_HASHTAGS) {
     return 'нельзя указать больше пяти хэш-тегов';
   }
   const hashtagValid = filteredHashtags.every(validateHashtagSymbols);
@@ -80,6 +92,8 @@ function getHashtagsErrorMessage (value) {
 }
 
 function resetForm() {
+  resetEffect();
+  resetScale();
   uploadInputElement.value = '';
   descriptionElement.value = '';
   hashtagsElement.value = '';
@@ -88,7 +102,7 @@ function resetForm() {
 }
 
 function initUploadForm() {
-  pristine.addValidator(descriptionElement, (value) => value.length <= 140, 'длина комментария не может составлять больше 140 символов');
+  pristine.addValidator(descriptionElement, (value) => value.length <= MAX_LENGTH_COMMENT, 'длина комментария не может составлять больше 140 символов');
   pristine.addValidator(hashtagsElement, validateHashtags, getHashtagsErrorMessage);
 
   uploadInputElement.addEventListener('change', () => {
@@ -100,11 +114,15 @@ function initUploadForm() {
     evt.preventDefault();
     if (isValid) {
       const formData = new FormData(evt.target);
+      uploadSubmitElement.setAttribute('disabled', 'disabled');
       uploadForm(formData, () => {
         resetForm();
+        uploadSubmitElement.removeAttribute('disabled');
         showSuccessMessage();
       }, () => {
-        showErrorMessage();
+        resetForm();
+        uploadSubmitElement.removeAttribute('disabled');
+        showErrorMessage('#error');
       });
     }
   });

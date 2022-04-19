@@ -12,6 +12,12 @@ export const uploadForm = (formData, onSuccess, onError) => {
       method: 'POST',
       body: formData,
     },
-  ).then(onSuccess)
+  ).then((response) => {
+    if (response.ok) {
+      onSuccess();
+    } else {
+      throw new Error();
+    }
+  })
     .catch(onError);
 };
