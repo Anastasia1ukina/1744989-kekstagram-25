@@ -30,3 +30,11 @@ scaleToBigger.addEventListener('click', () => {
 function applySizeImg () {
   imgUploadPreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
 }
+
+function resetScale () {
+  scaleValue = 100;
+  scaleControlValue.value = `${scaleValue}%`;
+  applySizeImg ();
+}
+
+export { resetScale };

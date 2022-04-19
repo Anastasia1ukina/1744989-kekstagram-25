@@ -7,6 +7,7 @@ import {initSlider} from'./effect.js';
 import {fetchPictures} from './fetch.js';
 import {resetFileInput} from './upload-picture.js';
 import {initFilters} from './filters.js';
+import { showErrorMessage } from './messages.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   initUploadForm();
@@ -14,6 +15,8 @@ window.addEventListener('DOMContentLoaded', () => {
   fetchPictures((pictures) => {
     renderPictures(pictures);
     initFilters(pictures);
+  }, () => {
+    showErrorMessage('#fetching-error');
   });
   resetFileInput();
 });
